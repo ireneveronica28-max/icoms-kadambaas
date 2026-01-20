@@ -1,0 +1,22 @@
+<button onclick="sendLocation()">Update Location</button>
+
+<script>
+function sendLocation() {
+    navigator.geolocation.getCurrentPosition(
+        (pos) => {
+            fetch("http://127.0.0.1:5000/api/tracking", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    delivery_id: 1,
+                    latitude: pos.coords.latitude,
+                    longitude: pos.coords.longitude,
+                    speed: 30
+                })
+            })
+            .then(() => alert("Location sent successfully"));
+        },
+        () => alert("Location permission denied")
+    );
+}
+</script>
